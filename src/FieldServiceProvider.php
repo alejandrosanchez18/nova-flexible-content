@@ -20,10 +20,10 @@ class FieldServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->app['router']->pushMiddlewareToGroup('nova', InterceptFlexibleAttributes::class);
-        
+
         Nova::serving(function (ServingNova $event) {
             Nova::script('nova-flexible-content', __DIR__.'/../dist/js/field.js');
-            Nova::style('nova-flexible-content', __DIR__.'/../dist/css/field.css');
+            // Nova::style('nova-flexible-content', __DIR__.'/../dist/css/field.css');
         });
     }
 
