@@ -210,7 +210,7 @@ export default {
         }
       } else {
         this.$toasted.show(
-          this.__("Solamente puede agregar un cuestionario o una secuencia"),
+          this.__("You can only add a quiz or a sequence"),
           {
             type: "error",
           }
