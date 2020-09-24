@@ -10,7 +10,13 @@
         @click.prevent="expand"
         v-if="collapsed"
       >
-        <icon class="align-top" type="plus-square" width="16" height="16" view-box="0 0 24 24" />
+        <icon
+          class="align-top"
+          type="plus-square"
+          width="16"
+          height="16"
+          view-box="0 0 24 24"
+        />
       </button>
       <div v-if="!collapsed">
         <button
@@ -19,7 +25,13 @@
           title="Collapse"
           @click.prevent="collapse"
         >
-          <icon class="align-top" type="minus-square" width="16" height="16" view-box="0 0 24 24" />
+          <icon
+            class="align-top"
+            type="minus-square"
+            width="16"
+            height="16"
+            view-box="0 0 24 24"
+          />
         </button>
         <div v-if="!readonly">
           <button
@@ -36,7 +48,12 @@
             title="Move down"
             @click.prevent="moveDown"
           >
-            <icon type="arrow-down" view-box="0 0 8 4.8" width="10" height="10" />
+            <icon
+              type="arrow-down"
+              view-box="0 0 8 4.8"
+              width="10"
+              height="10"
+            />
           </button>
           <button
             type="button"
@@ -50,7 +67,7 @@
             <delete-flexible-content-group-modal
               v-if="removeMessage"
               @confirm="remove"
-              @close="removeMessage=false"
+              @close="removeMessage = false"
               :message="field.confirmRemoveMessage"
               :yes="field.confirmRemoveYes"
               :no="field.confirmRemoveNo"
@@ -61,7 +78,10 @@
     </div>
     <div class="-mb-1 flex flex-col min-h-full w-full">
       <div :class="titleStyle" v-if="group.title">
-        <div class="leading-normal py-1 px-8" :class="{'border-b border-40': !collapsed}">
+        <div
+          class="leading-normal py-1 px-8"
+          :class="{ 'border-b border-40': !collapsed }"
+        >
           <p class="text-80">{{ group.title }}</p>
         </div>
       </div>
@@ -97,9 +117,7 @@ export default {
       readonly: this.group.readonly,
     };
   },
-  mounted() {
-      console.log("formgroup");
-  },
+  mounted() {},
   computed: {
     titleStyle() {
       let classes = ["border-t", "border-r", "border-60", "rounded-tr-lg"];

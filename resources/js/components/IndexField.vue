@@ -5,8 +5,6 @@
 <script>
 export default {
   props: ["resourceName", "field"],
-  mounted() {
-    console.log("index");
-  },
+  mounted() {},
 };
 </script>

@@ -28,9 +28,7 @@ export default {
     fieldName: { type: String },
     showHelpText: { type: Boolean, default: true },
   },
-  mounted() {
-    console.log("fullwidthFIeld");
-  },
+  mounted() {},
   computed: {
     fieldLabel() {
       // If the field name is purposefully empty, hide the label altogether

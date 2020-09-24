@@ -54,9 +54,7 @@ export default {
       isLayoutsDropdownOpen: false,
     };
   },
-  mounted() {
-    console.log("originalDrop");
-  },
+  mounted() {},
   methods: {
     /**
      * Display or hide the layouts choice dropdown if there are multiple layouts
