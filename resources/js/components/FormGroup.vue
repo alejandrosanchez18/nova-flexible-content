@@ -97,7 +97,9 @@ export default {
       readonly: this.group.readonly,
     };
   },
-
+  mounted() {
+      console.log("formgroup");
+  },
   computed: {
     titleStyle() {
       let classes = ["border-t", "border-r", "border-60", "rounded-tr-lg"];

@@ -70,6 +70,10 @@ export default {
     };
   },
 
+  mounted() {
+      console.log("formfield");
+  },
+
   methods: {
     /*
      * Set the initial, internal value for the field.

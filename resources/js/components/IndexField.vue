@@ -1,9 +1,12 @@
 <template>
-    <span>{{ field.value }}</span>
+  <span>{{ field.value }}</span>
 </template>
 
 <script>
 export default {
-    props: ['resourceName', 'field'],
-}
+  props: ["resourceName", "field"],
+  mounted() {
+    console.log("index");
+  },
+};
 </script>
