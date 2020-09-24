@@ -1,5 +1,6 @@
 <template>
   <component
+    :dusk="field.attribute"
     :is="field.fullWidth ? 'full-width-field' : 'default-field'"
     :field="field"
     :errors="errors"
@@ -8,10 +9,12 @@
     <template slot="field">
       <div v-if="order.length > 0">
         <form-nova-flexible-content-group
-          v-for="group in orderedGroups"
+          v-for="(group, index) in orderedGroups"
+          :dusk="field.attribute + '-' + index"
           :key="group.key"
           :field="field"
           :group="group"
+          :index="index"
           :resource-name="resourceName"
           :resource-id="resourceId"
           :resource="resource"
@@ -41,14 +44,11 @@
 import FullWidthField from "./FullWidthField";
 import { FormField, HandlesValidationErrors } from "laravel-nova";
 import Group from "../group";
-
+import { Errors, Minimum } from "laravel-nova";
 export default {
   mixins: [FormField, HandlesValidationErrors],
-
   props: ["resourceName", "resourceId", "resource", "field"],
-
   components: { FullWidthField },
-
   computed: {
     layouts() {
       return this.field.layouts || false;
@@ -63,15 +63,12 @@ export default {
 
   data() {
     return {
+      survey_or_sequence_limit: 0,
       order: [],
       groups: {},
       files: {},
       limitCounter: this.field.limit,
     };
-  },
-
-  mounted() {
-      console.log("formfield");
   },
 
   methods: {
@@ -179,6 +176,7 @@ export default {
     /**
      * Append the given layout to flexible content's list
      */
+
     addGroup(layout, attributes, key, collapsed) {
       if (!layout) return;
 
@@ -194,14 +192,29 @@ export default {
           collapsed
         );
 
-      console.log(group);
-      console.log(this.groups);
+      if (
+        (this.survey_or_sequence_limit == 1 &&
+          group.name != "start_survey" &&
+          group.name != "start_sequence") ||
+        this.survey_or_sequence_limit == 0
+      ) {
+        this.groups[group.key] = group;
+        this.order.push(group.key);
 
-      this.groups[group.key] = group;
-      this.order.push(group.key);
+        if (group.name == "start_survey" || group.name == "start_sequence") {
+          this.survey_or_sequence_limit = 1;
+        }
 
-      if (this.limitCounter > 0) {
-        this.limitCounter--;
+        if (this.limitCounter > 0) {
+          this.limitCounter--;
+        }
+      } else {
+        this.$toasted.show(
+          this.__("Solamente puede agregar un cuestionario o una secuencia"),
+          {
+            type: "error",
+          }
+        );
       }
     },
 
@@ -231,6 +244,12 @@ export default {
      * Remove a group
      */
     remove(key) {
+      if (
+        this.groups[key].name == "start_survey" ||
+        this.groups[key].name == "start_sequence"
+      ) {
+        this.survey_or_sequence_limit = 0;
+      }
       let index = this.order.indexOf(key);
 
       if (index < 0) return;
